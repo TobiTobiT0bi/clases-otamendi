@@ -1,0 +1,8 @@
+E:\repos\clases-otamendi\ClasesOtamendi\bin\Debug\ClasesOtamendi.exe.config
+E:\repos\clases-otamendi\ClasesOtamendi\bin\Debug\ClasesOtamendi.exe
+E:\repos\clases-otamendi\ClasesOtamendi\bin\Debug\ClasesOtamendi.pdb
+E:\repos\clases-otamendi\ClasesOtamendi\obj\Debug\ClasesOtamendi.csproj.AssemblyReference.cache
+E:\repos\clases-otamendi\ClasesOtamendi\obj\Debug\ClasesOtamendi.csproj.SuggestedBindingRedirects.cache
+E:\repos\clases-otamendi\ClasesOtamendi\obj\Debug\ClasesOtamendi.csproj.CoreCompileInputs.cache
+E:\repos\clases-otamendi\ClasesOtamendi\obj\Debug\ClasesOtamendi.exe
+E:\repos\clases-otamendi\ClasesOtamendi\obj\Debug\ClasesOtamendi.pdb
