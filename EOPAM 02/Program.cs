@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 //comprobarSexo(char sexo): comprueba que el sexo introducido es correcto. Si no es correcto, será H. No será visible al exterior.
 
-//generaDNI(): genera un número aleatorio de 8 cifras, genera a partir de este su número su letra correspondiente. Este método será invocado cuando se construya el objeto.
+//generaDNI(): genera un número aleatorio de 8 cifras. Este método será invocado cuando se construya el objeto.
 //Puedes dividir el método para que te sea más fácil. No será visible al exterior.
 
 //Métodos set de cada parámetro, excepto de DNI.
@@ -42,13 +42,14 @@ namespace EOPAM_02
 
         string nombre = "";                 //
         int edad = 0;                       //
-        int dni;                            //
+        string dni;                         //
         string sexo = sexoConst;            //atributos
         double peso = 0;                    //
         double altura = 0;                  //
+        Random rnd = new Random();          //
 
-        public string Nombre { 
-            get { return nombre; }      //Creo metodo Get para nombre, de esta manera se va a poder acceder al valor pero no se va a poder modificarlo
+        public string Nombre {
+            get { return nombre; } set{ nombre = value ;}    //Creo metodo Get para nombre, de esta manera se va a poder acceder al valor pero no se va a poder modificarlo
         }
 
         public int Edad
@@ -56,7 +57,7 @@ namespace EOPAM_02
             get { return edad; }      //Creo metodo Get para edad, de esta manera se va a poder acceder al valor pero no se va a poder modificarlo
         }
 
-        public int DNI
+        public string DNI
         {
             get { return dni; }      //Creo metodo Get para dni, de esta manera se va a poder acceder al valor pero no se va a poder modificarlo
         }
@@ -73,46 +74,89 @@ namespace EOPAM_02
             get { return altura; }      //Creo metodo Get para altura, de esta manera se va a poder acceder al valor pero no se va a poder modificarlo
         }
 
-        public Persona(string nombre, int edad, int dni, string sexo, double peso, double altura) {         //Constructor full, recibe toda variable posible y asigna a todos los atributos algo
+
+        public Persona(string nombre, int edad, double peso, double altura) {         //Constructor full, recibe toda variable posible y asigna a todos los atributos algo
             this.nombre = nombre;
             this.edad = edad;
-            this.dni = dni;
-            this.sexo = sexo;
+            this.dni = generarDni();
             this.peso = peso;
             this.altura = altura;
         }
 
-        public Persona(string nombre, int edad, string sexo) {                                              //Constructor 2: recibe solo nombre, edad y sexo
+        public Persona(string nombre, int edad) {                                              //Constructor 2: recibe solo nombre, edad y sexo
             this.nombre = nombre;
             this.edad = edad;
-            this.sexo = sexo;
+            this.dni = generarDni();
         }
 
-        public Persona() { }
+        public Persona() { }                                                                                //construtor 3: default (sin atributos)
 
-        public int calcularIMC() {
-            double resultado = Peso / (Altura * Altura);
+        public int calcularIMC() {                                                      //Creo funcion que devuelve un INT, el tipo de dato que devuelve se especifica de antemano, el nombre es calcularIMC y no recibe nada por parentesis
+            double resultado = Peso / (Altura * Altura);                                //Guardo el resultado de la ecuacion en una variable de tipo double (puede tener coma, no es numero entero) 
+            int devuelta = 0;                                                           //ya hay dos if que comprueban si es menor o mayor que 20/25, si no entra en ninguno de esos casos, devuelta va a tener el valor que deberia tener si estuviera ENTRE esos dos numeros
 
-            if (resultado > 20) { 
-            
+            if (resultado < 20) { 
+                devuelta = -1;
             }
-            if (resultado <= 20 && resultado >= 25) { 
-            
-            }
-            if (resultado > 25) { 
-            
+            //if (resultado <= 20 && resultado >= 25) {
+            //    devuelta = 0;
+            //}
+            if (resultado > 25) {
+                devuelta = 1;
             }
 
-            return 1;
+            return devuelta;
+        }
+
+        public bool esMayorDeEdad() { 
+            return edad > 18 ? true : false;                                            //se utiliza un ternario (foto relacionada) para comprobar si la edad es mayor a dieciocho, en caso de ser true, devuelve true, caso contrario, devuelve false
+        }
+
+        void comprobarSexo(char sexo) {
+            if (!(sexo == (char)72 || sexo == (char)77))                                //Aca se compureba si el sexo NO es "M" o "H", de ser asi, this.sexo sera asignado con el valor de la constante creada anteriormente
+            {                                                                           //El ternario de estos if seria asi: this.sexo = !(sexo == (char)72 || sexo == (char)77) ? sexoConst : Convert.ToString(sexo);
+                this.sexo = sexoConst;                                                  //opté por no usar un ternario acá porque tiene varias cosas y recien estamos empezando con ternarios, es mas simple de leer
+            }                                                                           //solamente usando if's
+            else {
+                this.sexo = Convert.ToString(sexo);
+            }
+        }
+
+        string generarDni() {
+
+            this.sexo = rnd.Next(0, 2) == 1 ? sexoConst : "M";              //se asigna un sexo utilizando una variable random y un ternario
+            comprobarSexo(Convert.ToChar(this.sexo));                       //se comprueba si el sexo asignado es valido
+
+            return Convert.ToString(rnd.Next(10000000, 100000000));         // funcion Next() crea un numero MAYOR O IGUAL al minimo y SIEMPRE MENOR al máximo
         }
     }
-
 
     internal class Program
     {
-        static void Main(string[] args)
-        {
-
+        static void Main(string[] args) {
+            Console.WriteLine("nombre pls");                                //
+            string nombre = Console.ReadLine();                             //
+                                                                            //
+            Console.WriteLine("edad pls");                                  //
+            int edad = Convert.ToInt32(Console.ReadLine());                 //
+                                                                            // Recoleccion de datos mediante consola
+            Console.WriteLine("peso en kg pls");                            //
+            double peso = Convert.ToDouble(Console.ReadLine());             //
+                                                                            //
+            Console.WriteLine("altura en metros pls");                      //
+            double altura = Convert.ToDouble(Console.ReadLine());           //
+                                                                            
+            Persona juan = new Persona(nombre, edad, peso, altura);         //
+            Persona pepe = new Persona(nombre, edad);                       // Creacion de objetos utlizando los constructores de la clase Persona y los datos recolectados
+            Persona gabriel = new Persona();                                //
         }
     }
 }
+
+//Ahora, crea una clase ejecutable que haga lo siguiente:
+//Pide por teclado el nombre, la edad, sexo, peso y altura.
+//Crea 3 objetos de la clase anterior, el primer objeto obtendrá las anteriores variables pedidas por teclado, el segundo objeto obtendrá todos los anteriores menos el peso y la altura y el último por defecto, para este último utiliza los métodos set para darle a los atributos un valor.
+//Para cada objeto, deberá comprobar si está en su peso ideal, tiene sobrepeso o por debajo de su peso ideal con un mensaje.
+//Indicar para cada objeto si es mayor de edad.
+//Por último, mostrar la información de cada objeto.
+//Puedes usar métodos en la clase ejecutable, para que os sea mas fácil.
