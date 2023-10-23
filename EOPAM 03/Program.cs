@@ -92,7 +92,18 @@ namespace EOPAM_03
     {
         static void Main(string[] args)
         {
+            Console.Write("¿Cuantas contraseñas desea crear?    ");                                             //
+            int Ncontras = Convert.ToInt32(Console.ReadLine());                                                 //     
+            bool[] fuertes = new bool[Ncontras];                                                                //atributos
+            Password[] contras = new Password[Ncontras];                                                        //
 
+            for (int i = 0; i < Ncontras; i++) {                                                                //
+                Console.WriteLine($"Ingrese longitud de la contraseña n°{i + 1}: ");                            // Se pregunta en cada contraseña la longitud de esta, luego, se crea una contraseña
+                contras[i] = new Password(Convert.ToInt32(Console.ReadLine()));                                 // con esa longitud en el respectivo espacio del array. Justo luego de eso, se comprueba
+                fuertes[i] = contras[i].esFuerte();                                                             // si esa contraseña cumple con las caracteristicas para ser considerada una "contraseña fuerte"
+                                                                                                                // 
+                Console.WriteLine($"contraseña {i + 1}: {contras[i].Contraseña}, {fuertes[i]}\n\n");            // Luego se muestra la contraseña con el booleano que dice si es fuerte
+            }                                                                                                   // 
         }
     }
 }
