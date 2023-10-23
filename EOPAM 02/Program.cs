@@ -129,10 +129,28 @@ namespace EOPAM_02
 
             return Convert.ToString(rnd.Next(10000000, 100000000));         // funcion Next() crea un numero MAYOR O IGUAL al minimo y SIEMPRE MENOR al máximo
         }
+
+        public string mostrarTodo() {
+            return $"nombre: {nombre}, edad: {edad}, dni: {dni}, sexo: {sexo}, peso: {peso}, altura: {altura}";         //devuelve un string con todos los atributos del objeto
+        }
     }
 
     internal class Program
     {
+        static public string mensajeIMC(int numero) {                       // se crea un switch que evalua el numero ingresado por el parentesis y devuelve un mensaje diferente 
+            switch (numero)                                                 // en cada caso
+            {
+                case -1:
+                    return "esta flaquito";
+                case 0:
+                    return "peso ideal";
+                case 1:
+                    return "chequear profesional de salud";
+            }
+
+            return "Error: valor no válido";
+        }
+
         static void Main(string[] args) {
             Console.WriteLine("nombre pls");                                //
             string nombre = Console.ReadLine();                             //
@@ -145,18 +163,25 @@ namespace EOPAM_02
                                                                             //
             Console.WriteLine("altura en metros pls");                      //
             double altura = Convert.ToDouble(Console.ReadLine());           //
-                                                                            
+
             Persona juan = new Persona(nombre, edad, peso, altura);         //
             Persona pepe = new Persona(nombre, edad);                       // Creacion de objetos utlizando los constructores de la clase Persona y los datos recolectados
             Persona gabriel = new Persona();                                //
+
+            Console.WriteLine($"juan: {mensajeIMC(juan.calcularIMC())}");           //
+            Console.WriteLine($"pepe: {mensajeIMC(pepe.calcularIMC())}");           // se calcula el IMC con una funcion, el resultado de eso es pasado a otra funcion que genera un mensaje en base a ese resultado y se imprime todo por consola
+            Console.WriteLine($"gabriel: {mensajeIMC(gabriel.calcularIMC())}");     //
+
+            Console.WriteLine($"{juan.Nombre}: {(juan.esMayorDeEdad() == true ? "es mayor de edad" : "no es mayor de edad")}");                     //
+            Console.WriteLine($"{pepe.Nombre}: {(pepe.esMayorDeEdad() == true ? "es mayor de edad" : "no es mayor de edad")}");                     // Se utilizan ternarios y variables para mostrar un mensaje en caso de ser mayor de edad y otro en caso de ser menor de edad
+            Console.WriteLine($"{gabriel.Nombre}: {(gabriel.esMayorDeEdad() == true ? "es mayor de edad" : "no es mayor de edad")}");               //
+
+            Console.WriteLine($"{juan.mostrarTodo()}");                             //
+            Console.WriteLine($"{pepe.mostrarTodo()}");                             // Se imprime por consola todos los atributos de cada objeto utilizando la funcion mostrarTodo()
+            Console.WriteLine($"{gabriel.mostrarTodo()}");                          //
+
+            Console.ReadKey();
+
         }
     }
 }
-
-//Ahora, crea una clase ejecutable que haga lo siguiente:
-//Pide por teclado el nombre, la edad, sexo, peso y altura.
-//Crea 3 objetos de la clase anterior, el primer objeto obtendrá las anteriores variables pedidas por teclado, el segundo objeto obtendrá todos los anteriores menos el peso y la altura y el último por defecto, para este último utiliza los métodos set para darle a los atributos un valor.
-//Para cada objeto, deberá comprobar si está en su peso ideal, tiene sobrepeso o por debajo de su peso ideal con un mensaje.
-//Indicar para cada objeto si es mayor de edad.
-//Por último, mostrar la información de cada objeto.
-//Puedes usar métodos en la clase ejecutable, para que os sea mas fácil.
