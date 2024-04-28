@@ -28,7 +28,7 @@ namespace EOPAM_03
 {
     public class Password {
         int longitud;                       // atributos
-        string contraseña = string.Empty;   //
+        string contraseña = "";             //
 
         public string Contraseña { get { return contraseña; } }                             //
                                                                                             //métodos get para contraseña y longitud, metodo set para longitud
@@ -37,7 +37,7 @@ namespace EOPAM_03
         public Password(int longitud = 8) {                                                 //
             this.longitud = longitud;                                                       //
                                                                                             // Un solo contructor al cual se puede entrar de 2 maneras diferentes, una especificando longitud y otra dejando el parentesis vacio
-            generarPassword();                                                              //
+            contraseña = generarPassword();                                                 //
         }                                                                                   //
 
         public bool esFuerte() {                                                                //
@@ -84,7 +84,7 @@ namespace EOPAM_03
                 }                                                                                                                                                   //
             }                                                                                                                                                       //
                                                                                                                                                                     //
-            return Convert.ToString(contraEnProgreso.ToArray());                                                                                                    //
+            return Convert.ToString(contraEnProgreso);                                                                                                    //
         }                                                                                                                                                           //
     }                                                                                                                                                               //
 
